@@ -16,7 +16,7 @@ COPY entry-point.sh /app/entry-point.sh
 
 RUN chmod a+x /app/entry-point.sh
 
-# ENTRYPOINT ["./entry-point.sh"]
+ENTRYPOINT ["./entry-point.sh"]
 
 # Run app.py when the container launches
 CMD ["python", "/app/app.py"]
