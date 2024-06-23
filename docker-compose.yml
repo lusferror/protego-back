@@ -1,0 +1,21 @@
+services:
+  app:
+      build:
+        context: .
+        dockerfile: Dockerfile
+        target: backend
+
+      volumes:
+        - .:/app
+
+      # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+
+      ports:
+        - 3001:3001
+      
+      networks:
+        - network_prod
+
+networks:
+  network_prod:
+    driver: bridge
