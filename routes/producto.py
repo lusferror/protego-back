@@ -52,14 +52,7 @@ def actualizar_producto():
         producto:Producto = Producto.query.get(data['id'])
         if producto is None:
             return jsonify({'msg': 'Producto no encontrado'}), 404
-        producto.nombre = data['nombre']
-        producto.codigo = data['codigo']
-        producto.linea_id = data['linea_id']
-        producto.grupo_id = data['grupo_id']
-        producto.ancho = data['ancho'] if 'ancho' in data else None
-        producto.alto = data['alto'] if 'alto' in data else None
-        producto.largo = data['largo'] if 'largo' in data else None
-        producto.update()
+        producto.update(data)
         return jsonify({"msg":"Producto actualizado", "producto":producto.serializar(relaciones=['linea', 'grupo'])}), 200
     except Exception as e:
         return jsonify({'msg': str(e)}), 400

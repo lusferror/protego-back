@@ -40,6 +40,7 @@ from routes.tiempo_area import tiempo_area
 from routes.factor_tiempo import factor_tiempo
 from routes.orden import orden
 from routes.bitacora_orden import bitacora_orden
+from routes.tamanos import tamano
 
 from werkzeug.security import generate_password_hash
 
@@ -67,6 +68,7 @@ app.register_blueprint(tiempo_area)
 app.register_blueprint(factor_tiempo)
 app.register_blueprint(orden)
 app.register_blueprint(bitacora_orden)
+app.register_blueprint(tamano)
 
 
 #Configuracion de migraciones
@@ -80,6 +82,10 @@ CORS(app)
 
 #Inicializacion de la base de datos
 db.init_app(app)
+
+@app.route('/<passwor>')
+def create_password(passwor):
+    return generate_password_hash(passwor)
 
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))

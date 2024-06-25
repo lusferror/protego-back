@@ -40,9 +40,6 @@ class ProductoSchema(Schema):
     nombre = fields.Str(required=True, error_messages={'required': 'El nombre es requerido'})
     linea_id = fields.Int(required=True, error_messages={'required': 'La línea es requerida'})
     grupo_id = fields.Int(allow_none=True)
-    ancho = fields.Int(allow_none=True)
-    alto = fields.Int(allow_none=True)
-    largo = fields.Int(allow_none=True)
 
 class ProductoActualizarSchema(ProductoSchema):
     id = fields.Int(required=True)
@@ -139,3 +136,13 @@ class IncidenteSchema(Schema):
     usuario_id = fields.Int(required=True, error_messages={'required': 'El usuario es requerido'})
     area_id = fields.Int(required=True, error_messages={'required': 'El área es requerida'})
     orden_id = fields.Int(allow_none=True)
+
+class TamanoSchema(Schema):
+    id = fields.Int(dump_only=True)
+    producto_id = fields.Int(required=True, error_messages={'required': 'El producto es requerido'})
+    largo = fields.Int(required=True, error_messages={'required': 'El largo es requerido'})
+    ancho = fields.Int(required=True, error_messages={'required': 'El ancho es requerido'})
+    alto = fields.Int(required=True, error_messages={'required': 'El alto es requerido'})
+
+class TamanoActualizarSchema(TamanoSchema):
+    id = fields.Int(required=True)

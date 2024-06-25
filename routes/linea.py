@@ -15,7 +15,7 @@ linea = Blueprint('linea', __name__, url_prefix='/linea')
 def get_lineas():
     try:
         lineas:list[Linea] = Linea.query.order_by(Linea.id).all()
-        return jsonify({"msg": "Lineas encontradas", "lineas": [linea.serializar(relaciones=['productos']) for linea in lineas]}), 200
+        return jsonify({"msg": "Lineas encontradas", "lineas": [linea.serializar(relaciones=['productos.[tamanos]']) for linea in lineas]}), 200
     except Exception as e:
         print(e)
         return jsonify({"msg": "Error al buscar las lineas", "error": str(e)}), 500

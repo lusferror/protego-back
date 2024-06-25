@@ -6,6 +6,7 @@ from typing import List, TYPE_CHECKING
 if TYPE_CHECKING:
     from .Linea import Linea
     from .Grupo import Grupo
+    from .Tamano import Tamano
 
 class Producto(Model):
 
@@ -17,13 +18,11 @@ class Producto(Model):
     nombre: Mapped[str] = mapped_column(String(50), unique=True, nullable=False, index=True)
     linea_id: Mapped[int] = mapped_column(Integer, ForeignKey('lineas.id'))
     grupo_id: Mapped[int] = mapped_column(Integer, ForeignKey('grupos.id'), nullable=True)
-    ancho: Mapped[int] = mapped_column(Integer, nullable=True, comment='Ancho en centimetros')
-    alto: Mapped[int] = mapped_column(Integer, nullable=True, comment='Alto en centimetros')
-    largo: Mapped[int] = mapped_column(Integer, nullable=True, comment='Largo en centimetros')
 
     # Relaciones
     linea: Mapped['Linea'] = relationship('Linea')
     grupo: Mapped['Grupo'] = relationship('Grupo')
+    tamanos: Mapped[List['Tamano']] = relationship('Tamano', back_populates='producto')
 
     def linea_nombre(self) -> str:
         return self.linea.nombre

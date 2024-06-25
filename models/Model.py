@@ -54,7 +54,10 @@ class Model(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update(self):
+    def update(self, data: dict = {}):
+        for key, value in data.items():
+            if hasattr(self, key) and value is not None and key != 'id':
+                setattr(self, key, value)
         self.updated_at = datetime.now()
         db.session.commit()
 
