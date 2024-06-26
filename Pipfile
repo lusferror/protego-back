@@ -12,6 +12,7 @@ flask = "*"
 flask-migrate = "==3.0.1"
 marshmallow = "*"
 gunicorn = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

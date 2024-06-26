@@ -7,6 +7,7 @@ from middlewares.admin import middleware_admin
 from marshmallow import ValidationError
 from schemas.schemas import UsuarioRegistroSchema
 from schemas.schemas import UsuarioActualizarSchema
+from schemas.schemas import UsuarioContrasenaSchema
 
 from models.Model import db
 from models.Usuario import Usuario
@@ -175,3 +176,22 @@ def get_operadores(area_id:int) -> jsonify:
     except Exception as e:
         print(e)
         return jsonify({"msg": "Ha ocurrido un error en la consulta"}), 500
+
+@usuario.route('/contrasena', methods=['PUT'])
+@jwt_required()
+@middleware_admin
+def contrasena() -> jsonify:
+    try:
+        request:dict = request.get_json()
+        try:
+            UsuarioContrasenaSchema().load(request)
+        except ValidationError as e:
+            return jsonify(e.messages), 400
+
+        usuario:Usuario = Usuario.query.get(request.get('id'))
+        usuario.password = generate_password_hash(request.get('password'))
+        usuario.update()
+    except Exception as e:
+        print(e)
+        return jsonify({"msg": "Ha ocurrido un error al cambiar contraseña", "error":str(e)}), 500
+

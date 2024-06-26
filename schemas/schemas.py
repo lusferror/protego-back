@@ -23,6 +23,10 @@ class UsuarioSchema(Schema):
 class UsuarioRegistroSchema(UsuarioSchema):
     password = fields.Str(required=True, error_messages={'required': 'La contraseña es requerida'})
 
+class UsuarioContrasenaSchema(Schema):
+    id = fields.Int(required=True, error_messages={'required': 'El id es requerido'})
+    password = fields.Str(required=True, error_messages={'required': 'La contraseña es requerida'})
+
 class UsuarioActualizarSchema(UsuarioSchema):
     id = fields.Int(required=True)
 
