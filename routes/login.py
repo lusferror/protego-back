@@ -32,7 +32,7 @@ def login_user() -> jsonify:
         data = {
             "msg": "Inicio de sesion exitoso!",
             "token": token,
-            "usuario": usuario.serializar(relaciones=['area', 'roles_usuario.[rol]'])
+            "usuario": usuario.serializar(relaciones=['area', 'roles'])
         }
 
         return jsonify(data), 200
