@@ -182,15 +182,15 @@ def get_operadores(area_id:int) -> jsonify:
 @middleware_admin
 def contrasena() -> jsonify:
     try:
-        request:dict = request.get_json()
+        data:dict = request.get_json()
         try:
-            UsuarioContrasenaSchema().load(request)
+            UsuarioContrasenaSchema().load(data)
         except ValidationError as e:
             return jsonify(e.messages), 400
-
-        usuario:Usuario = Usuario.query.get(request.get('id'))
-        usuario.password = generate_password_hash(request.get('password'))
+        usuario:Usuario = Usuario.query.get(data.get('id'))
+        usuario.password = generate_password_hash(data.get('password'))
         usuario.update()
+        return jsonify({"msg": "Contraseña cambiada correctamente"}), 200
     except Exception as e:
         print(e)
         return jsonify({"msg": "Ha ocurrido un error al cambiar contraseña", "error":str(e)}), 500
