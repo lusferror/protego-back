@@ -24,7 +24,6 @@ def get_clientes():
     
 @cliente.route('/crear', methods=['POST'])
 @jwt_required()
-@middleware_admin
 def crear_cliente():
     try:
         data = request.get_json()
@@ -41,7 +40,6 @@ def crear_cliente():
 
 @cliente.route('/actualizar', methods=['PUT'])
 @jwt_required()
-@middleware_admin
 def actualizar_cliente():
     try:
         data = request.get_json()
@@ -63,7 +61,6 @@ def actualizar_cliente():
 
 @cliente.route('/desactivar/<int:id>', methods=['DELETE'])
 @jwt_required()
-@middleware_admin
 def desactivar_cliente(id):
     try:
         cliente: Cliente = Cliente.query.get(id)
@@ -76,7 +73,6 @@ def desactivar_cliente(id):
 
 @cliente.route('/activar/<int:id>', methods=['PATCH'])
 @jwt_required()
-@middleware_admin
 def activar_cliente(id):
     try:
         cliente: Cliente = Cliente.query.get(id)
