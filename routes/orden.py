@@ -152,26 +152,26 @@ def exportar_ordenes(estado):
 
     ordenes_reporte = list()
     for orden in ordenes:
-        fila_reporte = {
-            "NRO_ORDEN": orden.nro_orden,
-            "FECHA_ORDEN": orden.fecha,
-            "PRODUCTO": orden.producto.nombre,
-            "CLIENTE": orden.cliente.nombre,
-            "ESTADO": orden.estado,
-            "INCIDENTES": len(orden.incidentes),
-        }
-        if len(orden.incidentes) <= 0:
-            bitacora_vacio = {
-                "AREA": "",
-                "USUARIO": "",
-                "INICIO": "",
-                "FIN": "",
-                "TIEMPO_ESTIMADO": "",
-                "TIEMPO_REAL": "",
-                "DIFERENCIA": "",
-            }
-            fila_reporte.update(bitacora_vacio)
         for bitacora in orden.bitacora:
+            fila_reporte = {
+                "NRO_ORDEN": orden.nro_orden,
+                "FECHA_ORDEN": orden.fecha,
+                "PRODUCTO": orden.producto.nombre,
+                "CLIENTE": orden.cliente.nombre,
+                "ESTADO": orden.estado,
+                "INCIDENTES": len(orden.incidentes),
+            }
+            if len(orden.incidentes) <= 0:
+                bitacora_vacio = {
+                    "AREA": "",
+                    "USUARIO": "",
+                    "INICIO": "",
+                    "FIN": "",
+                    "TIEMPO_ESTIMADO": "",
+                    "TIEMPO_REAL": "",
+                    "DIFERENCIA": "",
+                }
+                fila_reporte.update(bitacora_vacio)
             bitacora_data = {
                 "AREA": bitacora.area.nombre,
                 "USUARIO": bitacora.usuario.nombre,
@@ -182,6 +182,6 @@ def exportar_ordenes(estado):
                 "DIFERENCIA": bitacora.diferencia(),
             }
             fila_reporte.update(bitacora_data)
-        ordenes_reporte.append(fila_reporte)
+            ordenes_reporte.append(fila_reporte)
 
     return jsonify({"msg": "Ordenes encontradas", "ordenes": ordenes_reporte}), 200
