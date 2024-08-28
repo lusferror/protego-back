@@ -1,7 +1,7 @@
 import os, sys
 from flask import Blueprint, request, jsonify
 from marshmallow import ValidationError
-from sqlalchemy import desc
+from sqlalchemy import desc, or_
 from flask_jwt_extended import jwt_required
 
 from schemas.schemas import OrdenSchema
@@ -98,6 +98,24 @@ def orden_proceso(estado):
     try:
         ordenes: list[Orden] = (
             Orden.query.filter(Orden.estado == estado).order_by(desc(Orden.id)).all()
+        )
+        ordenes: list[Orden] = [
+            orden.serializar(
+                relaciones=["bitacora_ultimo.[area,usuario]", "incidentes", "cliente"]
+            )
+            for orden in ordenes
+        ]
+        return jsonify({"msg": "Ordenes en proceso", "ordenes": ordenes}), 200
+    except Exception as e:
+        print(e)
+        return jsonify({"msg": "Error al buscar ordenes"}), 500
+    
+@orden.route("/panel")
+@jwt_required()
+def orden_panel():
+    try:
+        ordenes: list[Orden] = (
+            Orden.query.filter(or_(Orden.estado == 'proceso', Orden.estado == 'pausada')).order_by(desc(Orden.id)).all()
         )
         ordenes: list[Orden] = [
             orden.serializar(
