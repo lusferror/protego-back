@@ -1,5 +1,5 @@
 from .Model import Model
-from sqlalchemy import Integer, DateTime, desc, ForeignKey
+from sqlalchemy import Integer, DateTime, desc, ForeignKey, String
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from typing import List, TYPE_CHECKING
 from datetime import datetime, timedelta
@@ -27,6 +27,7 @@ class BitacoraOrden(Model):
     orden_id: Mapped[int] = mapped_column(Integer, ForeignKey('ordenes.id'), nullable=False)
     area_id: Mapped[int] = mapped_column(Integer, ForeignKey('areas.id'), nullable=False)
     usuario_id: Mapped[int] = mapped_column(Integer, ForeignKey('usuarios.id'), nullable=False)
+    estado:Mapped[str] = mapped_column(String, nullable=True, comment='Estado de la actividad', default='Iniciado') # Iniciado, Finalizado, Pausado
 
     # Relaciones
     orden: Mapped['Orden'] = relationship('Orden', overlaps='bitacora, bitacora_ultimo')

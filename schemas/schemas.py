@@ -133,7 +133,7 @@ class BitacoraOrdenSchema(Schema):
     orden_id = fields.Int(required=True, error_messages={'required': 'La orden es requerida'})
     area_id = fields.Int(required=True, error_messages={'required': 'El área es requerida'})
     usuario_id = fields.Int(required=True, error_messages={'required': 'El usuario es requerido'})
-
+    estado = fields.Str(allow_none=True)
 class IncidenteSchema(Schema):
     id = fields.Int(dump_only=True)
     tipo_incidente_id = fields.Int(required=True, error_messages={'required': 'El tipo de incidente es requerido'})
